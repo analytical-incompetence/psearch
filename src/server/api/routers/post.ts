@@ -39,4 +39,22 @@ export const postRouter = createTRPCRouter({
   getSecretMessage: protectedProcedure.query(() => {
     return "you can now see this secret message!";
   }),
+
+    getSearchResults: protectedProcedure
+        .input(z.object({
+            query: z.string().min(1),
+            // query: z.function().args().returns(z.string())
+        }))
+        .query(async ({input}) => {
+            const queryURI = encodeURI(input.query);
+            const response = await fetch(`https://api.search.brave.com/res/v1/web/search?q=${queryURI}`, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Accept-Encoding': 'gzip',
+                    'X-Subscription-Token': env.BRAVE_SEARCH_API_SECRET,
+                }
+            });
+
+            return parseQueryResult(await response.text());
+        })
 });
