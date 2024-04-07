@@ -5,17 +5,14 @@ import { CreatePost } from "@/app/_components/create-post";
 import { getServerAuthSession } from "@/server/auth";
 import { api } from "@/trpc/server";
 
-import {Button} from '@nextui-org/button';
-import {Boxes} from "@/app/_components/ui/background-boxes";
 
 export default async function Home() {
   noStore();
-  const hello = await api.post.hello.query({ text: "from tRPC" });
+  const hello = await api.post.hello.query({ text: "from AI" });
   const session = await getServerAuthSession();
 
   return (
     <main className="overflow-hidden flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-        <Boxes/>
       <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
         <h1 className="z-20 text-5xl font-extrabold tracking-tight sm:text-[5rem]">
           Create <span className="text-[hsl(280,100%,70%)]">T3</span> App
@@ -77,7 +74,7 @@ async function CrudShowcase() {
   return (
     <div className="w-full max-w-xs">
       {latestPost ? (
-        <p className="truncate">Your most recent post: {latestPost.name}</p>
+          <p className="truncate">Your most recent post: {latestPost.name}</p>
       ) : (
         <p>You have no posts yet.</p>
       )}
