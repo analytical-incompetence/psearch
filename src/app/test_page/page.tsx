@@ -6,7 +6,7 @@ import {api} from "@/trpc/react";
 import {getServerAuthSession} from "@/server/auth";
 import {Input} from "@nextui-org/input";
 import {Button} from "@nextui-org/button";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 export default function TestPage() {
     const [query, setQuery] = useState("");
@@ -16,6 +16,10 @@ export default function TestPage() {
             setEnabled(false);
         }
     });
+
+    useEffect(() => {
+        setEnabled(false);
+    }, [searchResults])
 
     const buttonPress = () => {
         setEnabled(true);
