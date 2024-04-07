@@ -5,7 +5,7 @@ import {CreatePost} from "@/app/_components/create-post";
 import {getServerAuthSession} from "@/server/auth";
 import {api} from "@/trpc/server";
 
-
+import {Header} from "@/app/_components/header";
 
 export default async function Home() {
   noStore();
@@ -31,8 +31,6 @@ export default async function Home() {
               </p>
             </div>
           </div>
-
-          <CrudShowcase />
         </div>
       </main>
     </div>
