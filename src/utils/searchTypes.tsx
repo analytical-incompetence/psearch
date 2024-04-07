@@ -75,12 +75,6 @@ export interface MetaUrl {
     path: string
 }
 
-// export function metaUrlFromString(input: string) {
-//     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-//     const json: MetaUrl = JSON.parse(input);
-//     return json;
-// }
-
 export default function parseQueryResult(input: string) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const json: QueryResult = JSON.parse(input);
