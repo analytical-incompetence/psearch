@@ -29,9 +29,6 @@ export async function Header() {
             </NavbarItem>
             </NavbarContent>
             <NavbarContent justify="end">
-            <NavbarItem className="hidden lg:flex">
-                <Link href="#">Login</Link>
-            </NavbarItem>
             <NavbarItem>
                 <Button as={Link} color="primary" href={session ? "/api/auth/signout?callbackUrl=/" : "/api/auth/signin?callbackUrl=/search"} variant="flat">
                 {session ? "Sign Out" : "Sign In"}
