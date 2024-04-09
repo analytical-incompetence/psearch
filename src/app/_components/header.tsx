@@ -44,7 +44,7 @@ export async function Header() {
                         color="foreground"
                         className="w-full"
                         href="/search"
-                        size="lg"
+                        // size="lg"
                     >
                         Search
                     </Link>
@@ -54,7 +54,7 @@ export async function Header() {
                         color="foreground"
                         className="w-full"
                         href="/history"
-                        size="lg"
+                        // size="lg"
                     >
                         History
                     </Link>

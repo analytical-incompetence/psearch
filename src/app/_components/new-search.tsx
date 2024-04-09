@@ -5,10 +5,57 @@ import {api} from "@/trpc/react";
 import {useEffect, useState} from "react";
 import {Input} from "@nextui-org/input";
 import {Button} from "@nextui-org/button";
+import {type Result} from "@/utils/searchTypes";
+
+import {Card, CardHeader, CardBody, Image, Skeleton} from "@nextui-org/react";
+
+import {IsSecure} from "@/app/_components/secure";
+
+function Result(result: Result) {
+    return (
+        <div className="flex flex-col gap-3" style={{
+            width: "100%",
+            maxWidth: "800px",
+            margin: "auto"
+        }}>
+            <Card isBlurred className="space-y-5 p-4" radius="lg" shadow={"sm"}>
+                <CardHeader className="pb-0 pt-2 px-4 flex flex-row justify-between items-center gap-3">
+                    <div className="flex flex-row gap-3 items-center">
+                        <Image
+                            src={result.profile.img}
+                            alt={result.profile.name}
+                            width={40}
+                            height={40}
+                            className="rounded-full"
+                            style={{
+                                maxWidth: "40px",
+                            }}
+                        />
+                        <div className="flex-col gap-2 items-start">
+                            <a href={result.url} target="_blank" rel="noopener noreferrer">
+                                <p className="text-lg font-semibold">{result.title}</p>
+                            </a>
+                            <div className="flex flex-row gap-1 text-small text-default-500">
+                                <div>{result.meta_url.hostname}</div>
+                                <div>{result.meta_url.path.trim()}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <IsSecure secure={result.meta_url.scheme === "https"} width={15} height={15}/>
+                </CardHeader>
+
+                <CardBody className="flex flex-col gap-3">
+                    <div className="flex flex-col gap-2">
+                        <div dangerouslySetInnerHTML={{__html: result.description}}/>
+                    </div>
+                </CardBody>
+            </Card>
+        </div>
+    )
+}
 
 export function SearchBox() {
-    const router = useRouter();
-
     const [query, setQuery] = useState("");
     const [enabled, setEnabled] = useState(false);
     const searchResults = api.post.getSearchResults.useQuery({query}, {
@@ -17,7 +64,6 @@ export function SearchBox() {
         }
     });
 
-    // Reset `enabled` to false after a search is complete
     useEffect(() => {
         setEnabled(false);
     }, [searchResults]);
@@ -27,7 +73,11 @@ export function SearchBox() {
     };
 
     return (
-        <div>
+        <div style={{
+            maxWidth: "800px",
+            margin: "auto",
+            width: "100%",
+        }}>
             <form
                 onSubmit={(e) => {
                     e.preventDefault();
@@ -35,22 +85,16 @@ export function SearchBox() {
                 }}
                 className="flex flex-col gap-2"
             >
-                {/*<input*/}
-                {/*    type="text"*/}
-                {/*    placeholder="Title"*/}
-                {/*    value={prompt}*/}
-                {/*    onChange={(e) => setPrompt(e.target.value)}*/}
-                {/*    className="w-full rounded-full px-4 py-2 text-black"*/}
-                {/*/>*/}
+                <div className={"flex flex-row gap-2 flex-item"}>
+                    <Input
+                        id="search-query"
+                        placeholder="Search Query"
+                        value={query}
+                        onChange={(e) => setQuery(e.target.value)}
+                    />
 
-                <Input
-                    id="search-query"
-                    placeholder="Search Query"
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                />
-
-                <Button type="submit">Search</Button>
+                    <Button type="submit" className={"flex-item"}>Search</Button>
+                </div>
             </form>
 
             <br></br>
@@ -60,10 +104,7 @@ export function SearchBox() {
                     {
                         searchResults.data.web?.results?.map(
                             (result, index) => (
-                                <div key={index} className="flex flex-col gap-2">
-                                    <a href={result.url}>{result.title}</a>
-                                    <p>{result.description}</p>
-                                </div>
+                                <Result key={index} {...result} />
                             )
                         )
                     }
