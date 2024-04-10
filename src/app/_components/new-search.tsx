@@ -71,7 +71,7 @@ export function SearchBox() {
         setTimeout(() => {
             setSavedResults(searchResults.data?.web.results ?? savedResults);
         }, 1);
-    });
+    }, [searchResults?.data?.web.results, savedResults]);
 
     const submitQuery = () => {
         setEnabled(true);
