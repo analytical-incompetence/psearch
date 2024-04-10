@@ -1,6 +1,6 @@
 "use client";
 
-import {useRouter} from "next/navigation";
+import {useRouter, useSearchParams} from "next/navigation";
 import {api} from "@/trpc/react";
 import {useEffect, useState} from "react";
 import {Input} from "@nextui-org/input";
@@ -10,7 +10,6 @@ import {type Result} from "@/utils/searchTypes";
 import {Card, CardHeader, CardBody, Image, Skeleton} from "@nextui-org/react";
 
 import {IsSecure} from "@/app/_components/secure";
-import {undefined} from "zod";
 
 function Result(result: Result) {
     return (
@@ -57,13 +56,15 @@ function Result(result: Result) {
 }
 
 export function SearchBox() {
-    const [query, setQuery] = useState("");
-    const [enabled, setEnabled] = useState(false);
-    const searchResults = api.post.getSearchResults.useQuery({query}, {enabled});
+    const searchParams = useSearchParams();
+    const urlQuery = searchParams?.get("query") ?? "";
 
+    const [query, setQuery] = useState(urlQuery);
+    const [enabled, setEnabled] = useState(urlQuery.length > 0);
     const [savedResults, setSavedResults] = useState<Result[]>([]);
 
     const pushQuery = api.post.pushQuery.useMutation();
+    const searchResults = api.post.getSearchResults.useQuery({query}, {enabled});
 
     useEffect(() => {
         setEnabled(false);
