@@ -7,9 +7,9 @@ import {Input} from "@nextui-org/input";
 import {Button} from "@nextui-org/button";
 import {type Result} from "@/utils/searchTypes";
 
-import { Card, CardBody, CardHeader, Image } from "@nextui-org/react";
+import {Card, CardBody, CardHeader, Image} from "@nextui-org/react";
 
-import { IsSecure } from "@/app/_components/secure";
+import {IsSecure} from "@/app/_components/secure";
 import usePersistState from "./persistence";
 
 function Result(result: Result) {
@@ -62,31 +62,31 @@ export function SearchBox() {
 
     const [query, setQuery] = useState(urlQuery);
     const [enabled, setEnabled] = useState(urlQuery.length > 0);
-    const [savedResults, setSavedResults] = useState<Result[]>([]);
-    const [previousSearchResults, setPreviousSearchResults]= usePersistState([], "previoussearch")
+    const [previousSearchResults, setPreviousSearchResults] = usePersistState<Result[]>([], "previousSearchResults");
 
     const pushQuery = api.post.pushQuery.useMutation();
     const searchResults = api.post.getSearchResults.useQuery({query}, {enabled});
+
+    const router = useRouter();
 
     useEffect(() => {
         setEnabled(false);
 
         setTimeout(() => {
-            console.log(searchResults.data?.web.results)
-            // setSavedResults(searchResults.data?.web.results ?? savedResults);
             if (searchResults.data?.web.results) {
                 setPreviousSearchResults(searchResults.data.web.results)
             } else {
                 setPreviousSearchResults(previousSearchResults)
             }
         }, 1);
-    }, [searchResults?.data?.web.results, previousSearchResults]);
+    }, [searchResults?.data?.web.results, previousSearchResults, setPreviousSearchResults]);
 
     const submitQuery = () => {
         setEnabled(true);
 
         // Push the query to the database
         pushQuery.mutate({query});
+        router.push("?query=" + query);
     };
 
     return (
