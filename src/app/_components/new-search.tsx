@@ -10,6 +10,7 @@ import {type Result} from "@/utils/searchTypes";
 import {Card, CardHeader, CardBody, Image, Skeleton} from "@nextui-org/react";
 
 import {IsSecure} from "@/app/_components/secure";
+import {undefined} from "zod";
 
 function Result(result: Result) {
     return (
@@ -42,7 +43,7 @@ function Result(result: Result) {
                         </div>
                     </div>
 
-                    <IsSecure secure={result.meta_url.scheme === "https"} width={15} height={15}/>
+                    <IsSecure secure={result.meta_url.scheme === "https"} width={15}/>
                 </CardHeader>
 
                 <CardBody className="flex flex-col gap-3">
@@ -58,18 +59,22 @@ function Result(result: Result) {
 export function SearchBox() {
     const [query, setQuery] = useState("");
     const [enabled, setEnabled] = useState(false);
-    const searchResults = api.post.getSearchResults.useQuery({query}, {
-        enabled, onSuccess: () => {
-            setEnabled(false);
-        }
-    });
+    const searchResults = api.post.getSearchResults.useQuery({query}, {enabled});
+
+    const [savedResults, setSavedResults] = useState<Result[]>([]);
 
     useEffect(() => {
         setEnabled(false);
-    }, [searchResults]);
+
+        setTimeout(() => {
+            setSavedResults(searchResults.data?.web.results ?? savedResults);
+        }, 1);
+    });
 
     const submitQuery = () => {
         setEnabled(true);
+
+        // Push the query to the database
     };
 
     return (
@@ -99,10 +104,10 @@ export function SearchBox() {
 
             <br></br>
 
-            {searchResults.data && (
+            {savedResults && (
                 <div className={"flex flex-col gap-4"}>
                     {
-                        searchResults.data.web?.results?.map(
+                        savedResults.map(
                             (result, index) => (
                                 <Result key={index} {...result} />
                             )

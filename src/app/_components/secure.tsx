@@ -31,5 +31,5 @@ export function Unsecure({width = 20, height = 20}) {
 }
 
 export function IsSecure({secure = true, width = 20, height = 20}) {
-    return secure ? <Secure width={width} height={height}/> : <Unsecure width={width} height={height}/>
+    return secure ? <Secure width={width} height={height}/> : <Unsecure width={width + 7.5} height={height}/>
 }
