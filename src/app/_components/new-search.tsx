@@ -1,16 +1,15 @@
 "use client";
 
-import {useRouter} from "next/navigation";
-import {api} from "@/trpc/react";
-import {useEffect, useState} from "react";
-import {Input} from "@nextui-org/input";
-import {Button} from "@nextui-org/button";
-import {type Result} from "@/utils/searchTypes";
+import { api } from "@/trpc/react";
+import { type Result } from "@/utils/searchTypes";
+import { Button } from "@nextui-org/button";
+import { Input } from "@nextui-org/input";
+import { useEffect, useState } from "react";
 
-import {Card, CardHeader, CardBody, Image, Skeleton} from "@nextui-org/react";
+import { Card, CardBody, CardHeader, Image } from "@nextui-org/react";
 
-import {IsSecure} from "@/app/_components/secure";
-import {undefined} from "zod";
+import { IsSecure } from "@/app/_components/secure";
+import usePersistState from "./persistence";
 
 function Result(result: Result) {
     return (
@@ -61,17 +60,24 @@ export function SearchBox() {
     const [enabled, setEnabled] = useState(false);
     const searchResults = api.post.getSearchResults.useQuery({query}, {enabled});
 
-    const [savedResults, setSavedResults] = useState<Result[]>([]);
+    const [previousSearchResults, setPreviousSearchResults]= usePersistState([], "previoussearch")
 
     const pushQuery = api.post.pushQuery.useMutation();
+    // console.log(searchResults.data?.web.results)
 
     useEffect(() => {
         setEnabled(false);
 
         setTimeout(() => {
-            setSavedResults(searchResults.data?.web.results ?? savedResults);
+            console.log(searchResults.data?.web.results)
+            // setSavedResults(searchResults.data?.web.results ?? savedResults);
+            if (searchResults.data?.web.results) {
+                setPreviousSearchResults(searchResults.data.web.results)
+            } else {
+                setPreviousSearchResults(previousSearchResults)
+            }
         }, 1);
-    }, [searchResults?.data?.web.results, savedResults]);
+    }, [searchResults?.data?.web.results, previousSearchResults]);
 
     const submitQuery = () => {
         setEnabled(true);
@@ -107,10 +113,10 @@ export function SearchBox() {
 
             <br></br>
 
-            {savedResults && (
+            {previousSearchResults && (
                 <div className={"flex flex-col gap-4"}>
                     {
-                        savedResults.map(
+                        previousSearchResults.map(
                             (result, index) => (
                                 <Result key={index} {...result} />
                             )
