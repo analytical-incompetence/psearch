@@ -2,12 +2,14 @@
 
 import {useEffect, useMemo, useState} from "react";
 
-export default function usePersistState<T>(initialValue: T, id: string): [T, (new_state: T) => void] {
+export default function useSessionStorage<T>(initialValue: T, id: string): [T, (new_state: T) => void] {
     const memoInitialValue = useMemo<T>(() => {
         const localStateString = sessionStorage.getItem('state:' + id);
+
         if (localStateString) {
             return JSON.parse(localStateString) as T;
         }
+
         return initialValue;
     }, [id, initialValue]);
 
