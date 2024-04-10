@@ -62,13 +62,19 @@ export const postRouter = createTRPCRouter({
         }),
 
     pushQuery: protectedProcedure
-        .input(z.object({name: z.string().min(1)}))
+        .input(z.object({query: z.string().min(1)}))
         .mutation(async ({ctx, input}) => {
-            return ctx.db.post.create({
+            return ctx.db.query.create({
                 data: {
-                    name: input.name,
-                    createdBy: {connect: {id: ctx.session.user.id}},
+                    query: input.query,
+                    userId: ctx.session.user.id,
                 },
             });
         }),
+
+    getQueries: protectedProcedure.query(async ({ctx}) => {
+        return ctx.db.query.findMany({
+            where: {userId: ctx.session.user.id},
+        });
+    })
 });

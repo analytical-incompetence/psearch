@@ -63,6 +63,8 @@ export function SearchBox() {
 
     const [savedResults, setSavedResults] = useState<Result[]>([]);
 
+    const pushQuery = api.post.pushQuery.useMutation();
+
     useEffect(() => {
         setEnabled(false);
 
@@ -75,6 +77,7 @@ export function SearchBox() {
         setEnabled(true);
 
         // Push the query to the database
+        pushQuery.mutate({query});
     };
 
     return (
