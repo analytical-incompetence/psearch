@@ -20,7 +20,6 @@ export async function Header() {
                     className="sm:hidden"
                 />
                 <NavbarBrand>
-                    {/* <AcmeLogo /> */}
                     <p className="font-bold text-inherit"><Link href="/">pSearch</Link></p>
                 </NavbarBrand>
             </NavbarContent>

@@ -1,4 +1,5 @@
 // Code modified from https://dev.to/jorensm/how-to-keep-state-between-page-refreshes-in-react-3801
+// "use client"
 
 import {useEffect, useMemo, useState} from "react";
 

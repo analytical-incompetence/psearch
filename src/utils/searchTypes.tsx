@@ -75,7 +75,14 @@ export interface MetaUrl {
     path: string
 }
 
-export default function parseQueryResult(input: string) {
+export interface History {
+    query: string
+    createdAt: Date,
+    userId: string,
+    id: string
+}
+
+export function parseQueryResult(input: string) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const json: QueryResult = JSON.parse(input);
     return json
