@@ -1,15 +1,15 @@
 "use client";
 
-import {useRouter, useSearchParams} from "next/navigation";
-import {api} from "@/trpc/react";
-import {useEffect, useState} from "react";
-import {Input} from "@nextui-org/input";
-import {Button} from "@nextui-org/button";
-import {type Result} from "@/utils/searchTypes";
+import { api } from "@/trpc/react";
+import { type Result } from "@/utils/searchTypes";
+import { Button } from "@nextui-org/button";
+import { Input } from "@nextui-org/input";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
-import {Card, CardBody, CardHeader, Image} from "@nextui-org/react";
+import { Card, CardBody, CardHeader, Image } from "@nextui-org/react";
 
-import {IsSecure} from "@/app/_components/secure";
+import { IsSecure } from "@/app/_components/secure";
 import useSessionStorage from "./persistence";
 
 function Result(result: Result) {
@@ -109,7 +109,7 @@ export function SearchBox() {
                         onChange={(e) => setQuery(e.target.value)}
                     />
 
-                    <Button type="submit" className={"flex-item"}>Search</Button>
+                    <Button type="submit" className={"flex-item"} isLoading={enabled}>Search</Button>
                 </div>
             </form>
 
