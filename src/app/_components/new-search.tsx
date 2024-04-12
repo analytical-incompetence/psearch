@@ -17,7 +17,6 @@ function Result(result: Result) {
         <div className="flex flex-col gap-3" style={{
             width: "100%",
             maxWidth: "800px",
-            margin: "auto"
         }}>
             <Card isBlurred className="space-y-5 p-4" radius="lg" shadow={"sm"}>
                 <CardHeader className="pb-0 pt-2 px-4 flex flex-row justify-between items-center gap-3">
@@ -37,8 +36,8 @@ function Result(result: Result) {
                                 <p className="text-lg font-semibold">{result.title}</p>
                             </a>
                             <div className="flex flex-row gap-1 text-small text-default-500">
-                                <div>{result.meta_url.hostname}</div>
-                                <div>{result.meta_url.path.trim()}</div>
+                                <div>{result.meta_url.hostname + result.meta_url.path.trim()}</div>
+                                {/*<div>{result.meta_url.path.trim()}</div>*/}
                             </div>
                         </div>
                     </div>
@@ -92,8 +91,8 @@ export function SearchBox() {
     return (
         <div style={{
             maxWidth: "800px",
-            margin: "auto",
             width: "100%",
+            paddingTop: "15px"
         }}>
             <form
                 onSubmit={(e) => {

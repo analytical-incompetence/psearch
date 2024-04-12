@@ -21,7 +21,15 @@ export default async function History() {
                             <span className="text-[hsl(280,100%,70%)]">pSearch</span>
                         </h1>
                     </div>
-                    <SearchHistory/>
+                    <div style={{
+                        width: "100%",
+                        maxWidth: "800px",
+                        paddingBottom: "50px",
+                        paddingLeft: "50px",
+                        paddingRight: "50px"
+                    }}>
+                        <SearchHistory/>
+                    </div>
                 </main>
             </div>
         )
