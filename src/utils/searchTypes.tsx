@@ -1,5 +1,3 @@
-import {api} from "@/trpc/server";
-
 export interface QueryResult {
     query: Query
     mixed: Mixed

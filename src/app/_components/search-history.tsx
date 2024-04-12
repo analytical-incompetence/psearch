@@ -1,5 +1,5 @@
-import { api } from "@/trpc/server";
-import { Card, CardBody, CardHeader } from "@nextui-org/react";
+import {api} from "@/trpc/server";
+import {Card, CardBody, CardHeader} from "@nextui-org/react";
 
 function Result(data: object) {
     // console.log(data.query, data.date, "Rendering Card")
@@ -13,7 +13,8 @@ function Result(data: object) {
                 <CardHeader className="pb-0 pt-2 px-4 flex flex-row justify-between items-center gap-3">
                     <div className="flex flex-row gap-3 items-center">
                         <div className="flex-col gap-2 items-start">
-                            <a href={encodeURI(`/search?query=${data.query}`)} target="_blank" rel="noopener noreferrer">
+                            <a href={encodeURI(`/search?query=${data.query}`)} target="_blank"
+                               rel="noopener noreferrer">
                                 <p className="text-lg font-semibold">{data.query}</p>
                             </a>
                             <div className="flex flex-row gap-1 text-small text-default-500">
@@ -59,46 +60,46 @@ export async function SearchHistory() {
         )
     } else {
         console.log(historyData[0])
-    return (
-        <div>
-            {historyData && (
-                <div className={"flex flex-col gap-4"}>
-                    {
-                        historyData.map(
-                            (result) => (
-                                <Result key={result.id} query={result.query} date={result.createdAt}/>
+        return (
+            <div>
+                {historyData && (
+                    <div className={"flex flex-col gap-4"}>
+                        {
+                            historyData.map(
+                                (result) => (
+                                    <Result key={result.id} query={result.query} date={result.createdAt}/>
+                                )
                             )
-                        )
-                    }
-                </div>
-            )}
-        </div>
-    )
-}
+                        }
+                    </div>
+                )}
+            </div>
+        )
+    }
 }
 
-    // const [previousSearches, setPreviousSearches] = useState<Result[]>([])
+// const [previousSearches, setPreviousSearches] = useState<Result[]>([])
 
-    // useEffect(() => {
-    //     setTimeout(() => {
-    //         // if (historyData.data !== undefined) {
-    //         //     setPreviousSearches(historyData.data)
-    //         //     console.log(historyData.data)
-    //         // }
-    //         setPreviousSearches(historyData.data)
-    //         console.log(historyData.data)
-    //     }, 10);
-    // }, []);
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         const result = await api.post.getQueries.useQuery();
-    //         setPreviousSearches(result.data);
-    //       };
-          
-    //       fetchData();
-    // }, [])
-    // const test = async () => {
-    //     const historyData = await api.post.getQueries.useQuery();
-    //     setPreviousSearches(await historyData.data)
-    // }
-    // console.log(previousSearches)
+// useEffect(() => {
+//     setTimeout(() => {
+//         // if (historyData.data !== undefined) {
+//         //     setPreviousSearches(historyData.data)
+//         //     console.log(historyData.data)
+//         // }
+//         setPreviousSearches(historyData.data)
+//         console.log(historyData.data)
+//     }, 10);
+// }, []);
+// useEffect(() => {
+//     const fetchData = async () => {
+//         const result = await api.post.getQueries.useQuery();
+//         setPreviousSearches(result.data);
+//       };
+
+//       fetchData();
+// }, [])
+// const test = async () => {
+//     const historyData = await api.post.getQueries.useQuery();
+//     setPreviousSearches(await historyData.data)
+// }
+// console.log(previousSearches)

@@ -1,9 +1,6 @@
 "use client"
 
-import Link from "next/link";
-import {unstable_noStore as noStore} from "next/dist/server/web/spec-extension/unstable-no-store";
 import {api} from "@/trpc/react";
-import {getServerAuthSession} from "@/server/auth";
 import {Input} from "@nextui-org/input";
 import {Button} from "@nextui-org/button";
 import {useEffect, useState} from "react";

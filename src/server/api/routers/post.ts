@@ -1,14 +1,10 @@
 import {z} from "zod";
 
-import {
-    createTRPCRouter,
-    protectedProcedure,
-    publicProcedure,
-} from "@/server/api/trpc";
+import {createTRPCRouter, protectedProcedure, publicProcedure,} from "@/server/api/trpc";
 
 import {env} from "@/env";
-import {parseQueryResult, type History} from "@/utils/searchTypes";
-import { PrismaPromise } from "@prisma/client";
+import {type History, parseQueryResult} from "@/utils/searchTypes";
+import {PrismaPromise} from "@prisma/client";
 
 export const postRouter = createTRPCRouter({
     hello: publicProcedure
