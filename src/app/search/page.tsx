@@ -3,7 +3,6 @@ import {unstable_noStore as noStore} from "next/cache";
 import {redirect} from 'next/navigation';
 import {Header} from "../_components/header";
 import {SearchBox} from "../_components/new-search";
-import {useSearchParams} from "next/navigation";
 
 export default async function Search() {
     noStore();

@@ -7,7 +7,8 @@ import {
 } from "@/server/api/trpc";
 
 import {env} from "@/env";
-import parseQueryResult from "@/utils/searchTypes";
+import {parseQueryResult, type History} from "@/utils/searchTypes";
+import { PrismaPromise } from "@prisma/client";
 
 export const postRouter = createTRPCRouter({
     hello: publicProcedure
@@ -75,6 +76,6 @@ export const postRouter = createTRPCRouter({
     getQueries: protectedProcedure.query(async ({ctx}) => {
         return ctx.db.query.findMany({
             where: {userId: ctx.session.user.id},
-        });
+        }) as unknown as PrismaPromise<History[]>;
     })
 });

@@ -10,7 +10,7 @@ import {type Result} from "@/utils/searchTypes";
 import {Card, CardBody, CardHeader, Image} from "@nextui-org/react";
 
 import {IsSecure} from "@/app/_components/secure";
-import usePersistState from "./persistence";
+import useSessionStorage from "./persistence";
 
 function Result(result: Result) {
     return (
@@ -62,7 +62,7 @@ export function SearchBox() {
 
     const [query, setQuery] = useState(urlQuery);
     const [enabled, setEnabled] = useState(urlQuery.length > 0);
-    const [previousSearchResults, setPreviousSearchResults] = usePersistState<Result[]>([], "previousSearchResults");
+    const [previousSearchResults, setPreviousSearchResults] = useSessionStorage<Result[]>([], "previousSearchResults");
 
     const pushQuery = api.post.pushQuery.useMutation();
     const searchResults = api.post.getSearchResults.useQuery({query}, {enabled});

@@ -4,13 +4,13 @@ import { redirect } from 'next/navigation';
 import { Header } from "../_components/header";
 import { SearchHistory } from "../_components/search-history";
 
+
 export default async function History() {
     noStore();
     const session = await getServerAuthSession();
     if (!session) {
-      redirect('/api/auth/signin?callbackUrl=/history')
-    }
-    else{
+        redirect('/api/auth/signin?callbackUrl=/history')
+    } else {
         return (
             <div>
                 <Header/>
