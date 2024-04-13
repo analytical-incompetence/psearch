@@ -1,6 +1,6 @@
-import {api} from "@/trpc/server";
-import {Card, CardBody, CardHeader} from "@nextui-org/react";
-import {type History} from "@/utils/searchTypes";
+import { api } from "@/trpc/server";
+import { type History } from "@/utils/searchTypes";
+import { Button, Card, CardBody, CardHeader, Link } from "@nextui-org/react";
 
 
 function Result({
@@ -50,11 +50,15 @@ export async function SearchHistory() {
                 margin: "auto"
             }}>
                 <Card isBlurred className="space-y-5 p-4" radius="lg" shadow={"sm"}>
-                    <CardHeader className="pb-0 pt-2 px-4 flex flex-row justify-between items-center gap-3">
+                    <CardBody className="flex flex-col gap-3 items-center">
                         <p className="text-lg font-semibold">No Previous Searches</p>
-                    </CardHeader>
-                    <CardBody className="flex flex-col gap-3 items-start">
-                        <p>Return to the search page and enter a query</p>
+                        <Button
+                            href="/search"
+                            as={Link}
+                            color="secondary"
+                            >
+                            Search
+                        </Button>
                     </CardBody>
                 </Card>
             </div>
