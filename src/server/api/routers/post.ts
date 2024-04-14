@@ -1,5 +1,7 @@
 import {z} from "zod";
 
+import {OpenAI} from "openai"
+
 import {createTRPCRouter, protectedProcedure, publicProcedure,} from "@/server/api/trpc";
 
 import {env} from "@/env";
@@ -46,7 +48,23 @@ export const postRouter = createTRPCRouter({
             // query: z.function().args().returns(z.string())
         }))
         .query(async ({input}) => {
-            const queryURI = encodeURI(input.query);
+            console.log("SEARCH: " + input.query)
+
+            const openai = new OpenAI({
+                apiKey: env.OPENAI_API_SECRET
+            })
+
+            const chatCompletion = await openai.chat.completions.create({
+                model: "gpt-4-turbo-preview",
+                messages: [{"role": "system", "content": `
+                You will be given text. Find the opposite text to the prompt.
+
+                For example, If the input is 'Hot locations near me', response should be 'Cold locations far away from me'
+                `},{ "role": "user", "content": input.query}],
+            });
+            console.log(chatCompletion.choices[0]?.message.content);
+
+            const queryURI = encodeURI(chatCompletion.choices[0]?.message.content);
             const response = await fetch(`https://api.search.brave.com/res/v1/web/search?q=${queryURI}`, {
                 headers: {
                     'Accept': 'application/json',
