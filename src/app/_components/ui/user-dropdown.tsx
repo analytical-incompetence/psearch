@@ -6,7 +6,7 @@ export function UserDropdown({ session }) {
     return (
     <Dropdown>
         <DropdownTrigger>
-            <Avatar size="sm" src={session.user?.image}/>
+            <Avatar size="sm" src={session.user?.image} color="secondary" isBordered/>
         </DropdownTrigger>
         <DropdownMenu aria-label="Profile Actions" disabledKeys={["profile"]}>
         <DropdownItem key="profile" className="h-14 gap-2">
