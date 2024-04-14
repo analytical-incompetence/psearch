@@ -1,16 +1,16 @@
 "use client";
 
-import {api} from "@/trpc/react";
-import {type Result} from "@/utils/searchTypes";
-import {Button} from "@nextui-org/button";
-import {Input} from "@nextui-org/input";
-import {useRouter, useSearchParams} from "next/navigation";
-import {useEffect, useState} from "react";
+import { api } from "@/trpc/react";
+import { type Result } from "@/utils/searchTypes";
+import { Button } from "@nextui-org/button";
+import { Input } from "@nextui-org/input";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
-import {Card, CardBody, CardHeader, Image} from "@nextui-org/react";
+import { Card, CardBody, CardHeader, Image } from "@nextui-org/react";
 
-import {IsSecure} from "@/app/_components/secure";
-import {hexHash} from "next/dist/shared/lib/hash";
+import { IsSecure } from "@/app/_components/secure";
+import { hexHash } from "next/dist/shared/lib/hash";
 
 function Result(result: Result) {
     return (
@@ -125,10 +125,12 @@ export function SearchBox() {
                         id="search-query"
                         placeholder="Search Query"
                         value={query}
-                        onChange={(e) => setQuery(e.target.value)}
+                        onChange={(e) => setQuery(e.target.value)
+                        }
+                        color="secondary"
                     />
 
-                    <Button type="submit" className={"flex-item"} isLoading={!searchEnabled}
+                    <Button color="secondary" type="submit" className={"flex-item"} isLoading={!searchEnabled}
                             disabled={!searchEnabled}>Search</Button>
                 </div>
             </form>
