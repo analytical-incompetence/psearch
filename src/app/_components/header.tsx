@@ -21,18 +21,18 @@ export function Header({session}) {
                 />
                 <NavbarBrand>
                     {/* <Link href="/"><Text color="secondary">pSearch</Text></Link> */}
-                    <Link href="/"><p>pSearch</p></Link>
+                    <Link href="/" color="secondary" size="lg">pSearch</Link>
                 </NavbarBrand>
             </NavbarContent>
 
             <NavbarContent className="hidden sm:flex gap-4" justify="center">
                 <NavbarItem>
-                    <Button as={Link} color="secondary" href="/search" variant="light">
+                    <Button as={Link} color="secondary" href="/search" variant="flat">
                         Search
                     </Button>
                 </NavbarItem>
                 <NavbarItem>
-                    <Button as={Link} color="secondary" href="/history" variant="light">
+                    <Button as={Link} color="secondary" href="/history" variant="flat">
                         History
                     </Button>
                 </NavbarItem>
