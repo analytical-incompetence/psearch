@@ -1,4 +1,5 @@
 import { getServerAuthSession } from "@/server/auth";
+import { Card, CardHeader } from "@nextui-org/react";
 import { unstable_noStore as noStore } from "next/cache";
 import { redirect } from 'next/navigation';
 import { Header } from "../_components/header";
@@ -16,17 +17,24 @@ export default async function Search() {
         <div>
             <Header session={session}/>
             <main
-                className="overflow-hidden flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
+                className="overflow-hidden flex min-h-screen flex-col items-center justify-center  text-white">
                 <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16" style={{
                     width: "100%",
                     maxWidth: "800px",
                     paddingLeft: "50px",
                     paddingRight: "50px",
                 }}>
-                    <h1 className="z-20 text-5xl font-extrabold tracking-tight sm:text-[5rem]">
-                        <span className="text-[hsl(280,100%,70%)]">pSearch</span>
-                    </h1>
-                    <SearchBox/>
+                        <Card isBlurred isHoverable={true} className="space-y-5 p-4"
+                      radius="lg" shadow={"sm"} style={{
+                    width: "100%"
+                        }}>
+                        <CardHeader className="pb-0 pt-2 px-4 flex flex-col justify-between items-center gap-3">
+                            <h1 className="z-20 text-5xl font-extrabold tracking-tight sm:text-[5rem]">
+                                <span className="text-[hsl(280,100%,70%)]">pSearch</span>
+                            </h1>
+                            <SearchBox/>
+                        </CardHeader>
+                        </Card>
                 </div>
             </main>
         </div>
