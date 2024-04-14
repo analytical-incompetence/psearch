@@ -47,7 +47,7 @@ export function ThemeSwitcher() {
 
   return (
     <div>
-      {theme == "dark" ? <Button isIconOnly variant="faded" color="primary" onClick={() => setTheme('light')}><Sun/></Button> :
+      {theme == "dark" ? <Button isIconOnly variant="light" color="primary" onClick={() => setTheme('light')}><Sun/></Button> :
       <Button isIconOnly variant="faded" color="secondary" onClick={() => setTheme('dark')}><Moon/></Button>}
     </div>
   )
