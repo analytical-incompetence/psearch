@@ -1,6 +1,6 @@
-import {type Config} from "tailwindcss";
-import {fontFamily} from "tailwindcss/defaultTheme";
-import {nextui} from "@nextui-org/react";
+import { nextui } from "@nextui-org/react";
+import { type Config } from "tailwindcss";
+import { fontFamily } from "tailwindcss/defaultTheme";
 
 // import { default as flattenColorPalette } from "tailwindcss/lib/util/flattenColorPalette";
 // import { colors } from "tailwindcss/colors";
@@ -28,7 +28,7 @@ export default {
                 themes: {
                     dark: {
                         colors: {
-                            foreground: "#F5E8DA",
+                            foreground: "#a1dcf7",
                             primary: {
                                 DEFAULT: "#0F0140",
                                 foreground: "#00FF00",
