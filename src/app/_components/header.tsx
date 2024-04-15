@@ -1,6 +1,7 @@
 "use client"
 import {
-    Button, Navbar,
+    Button,
+    Navbar,
     NavbarBrand,
     NavbarContent,
     NavbarItem,
@@ -9,10 +10,11 @@ import {
     NavbarMenuToggle
 } from "@nextui-org/react";
 import Link from "next/link";
-import { ThemeSwitcher } from "./ui/ThemeSwitcher";
-import { UserDropdown } from "./ui/user-dropdown";
+import {ThemeSwitcher} from "./ui/ThemeSwitcher";
+import {UserDropdown} from "./ui/user-dropdown";
+import {type SessionProps} from "@/utils/sessionProps"
 
-export function Header({session}) {
+export function Header({session}: SessionProps) {
     return (
         <Navbar isBordered>
             <NavbarContent>
@@ -21,7 +23,7 @@ export function Header({session}) {
                 />
                 <NavbarBrand>
                     {/* <Link href="/"><Text color="secondary">pSearch</Text></Link> */}
-                    <Link href="/" color="secondary" size="lg">pSearch</Link>
+                    <Link href="/" color="secondary">pSearch</Link>
                 </NavbarBrand>
             </NavbarContent>
 
@@ -42,7 +44,9 @@ export function Header({session}) {
                     <ThemeSwitcher/>
                 </NavbarItem>
                 <NavbarItem>
-                    {session ? <UserDropdown session={session}/> : <Button as={Link} color="secondary" href="/api/auth/signin?callbackUrl=/search">Sign In</Button>}
+                    {session ? <UserDropdown session={session}/> :
+                        <Button as={Link} color="secondary" href="/api/auth/signin?callbackUrl=/search">Sign
+                            In</Button>}
                 </NavbarItem>
             </NavbarContent>
             <NavbarMenu>
@@ -71,7 +75,7 @@ export function Header({session}) {
     );
 }
 
-                    {/* <Dropdown>
+{/* <Dropdown>
                         <DropdownTrigger>
                         <Button 
                             variant="bordered" 
@@ -86,9 +90,11 @@ export function Header({session}) {
                             Delete file
                         </DropdownItem>
                         </DropdownMenu>
-                    </Dropdown> */}
-                    {/* <Button as={Link} color="secondary"
+                    </Dropdown> */
+}
+{/* <Button as={Link} color="secondary"
 href={session ? "/api/auth/signout?callbackUrl=/" : "/api/auth/signin?callbackUrl=/search"}
 variant="flat">
 {session ? "Sign Out" : "Sign In"}
-</Button> */}
+</Button> */
+}

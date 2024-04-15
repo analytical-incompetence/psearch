@@ -26,8 +26,8 @@ export interface Query {
 export interface Mixed {
     type: string
     main: Main[]
-    top: any[]
-    side: any[]
+    top: never[]
+    side: never[]
 }
 
 export interface Main {

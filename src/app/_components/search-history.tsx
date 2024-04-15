@@ -49,7 +49,7 @@ export async function SearchHistory() {
                 maxWidth: "800px",
                 margin: "auto"
             }}>
-                <Card isBlurred className="space-y-5 p-4" radius="lg" shadow={"sm"}>
+                <Card isBlurred className="space-y-5 p-4" radius="lg" shadow={"lg"}>
                     <CardBody className="flex flex-col gap-3 items-center">
                         <p className="text-lg font-semibold">No Previous Searches</p>
                         <Button

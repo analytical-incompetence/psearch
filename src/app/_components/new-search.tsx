@@ -1,24 +1,24 @@
 "use client";
 
-import { api } from "@/trpc/react";
-import { type Result } from "@/utils/searchTypes";
-import { Button } from "@nextui-org/button";
-import { Input } from "@nextui-org/input";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import {api} from "@/trpc/react";
+import {type Result} from "@/utils/searchTypes";
+import {Button} from "@nextui-org/button";
+import {Input} from "@nextui-org/input";
+import {useRouter, useSearchParams} from "next/navigation";
+import {useEffect, useState} from "react";
 
-import { Card, CardBody, CardHeader, Image } from "@nextui-org/react";
+import {Card, CardBody, CardHeader, Image} from "@nextui-org/react";
 
-import { IsSecure } from "@/app/_components/secure";
-import { hexHash } from "next/dist/shared/lib/hash";
+import {IsSecure} from "@/app/_components/secure";
+import {hexHash} from "next/dist/shared/lib/hash";
 
 function Result(result: Result) {
     return (
-        <div className="flex flex-col gap-3" style={{
+        <a className="flex flex-col gap-3" href={result.url} target="_blank" rel="noopener noreferrer" style={{
             width: "100%",
             maxWidth: "800px",
         }}>
-            <Card isBlurred className="space-y-5 p-4" radius="lg" shadow={"sm"}>
+            <Card isBlurred isHoverable={true} isPressable={true} className="space-y-5 p-4" radius="lg" shadow={"sm"}>
                 <CardHeader className="pb-0 pt-2 px-4 flex flex-row justify-between items-center gap-3">
                     <div className="flex flex-row gap-3 items-center">
                         <Image
@@ -32,9 +32,7 @@ function Result(result: Result) {
                             }}
                         />
                         <div className="flex-col gap-2 items-start">
-                            <a href={result.url} target="_blank" rel="noopener noreferrer">
-                                <p className="text-lg font-semibold">{result.title}</p>
-                            </a>
+                            <p className="text-lg font-semibold">{result.title}</p>
                             <div className="flex flex-row gap-1 text-small text-default-500">
                                 <div>{result.meta_url.hostname + result.meta_url.path.trim()}</div>
                             </div>
@@ -50,7 +48,7 @@ function Result(result: Result) {
                     </div>
                 </CardBody>
             </Card>
-        </div>
+        </a>
     )
 }
 
@@ -61,8 +59,6 @@ export function SearchBox() {
     const [query, setQuery] = useState(urlQuery);
     const [enabled, setEnabled] = useState(urlQuery.length > 0);
     const [searchEnabled, setSearchEnabled] = useState(urlQuery.length > 0);
-    // const [previousSearchResults, setPreviousSearchResults] = useSessionStorage<Result[]>([], "previousSearchResults");
-
     const [previousSearchResults, setPreviousSearchResults] = useState<Result[]>([]);
 
     const pushQuery = api.post.pushQuery.useMutation();
@@ -77,20 +73,12 @@ export function SearchBox() {
 
         if (searchResults?.data?.web.results) {
             setPreviousSearchResults(searchResults.data.web.results);
+            const newSearchHash = hexHash(JSON.stringify(query));
+            setPrevSearchHash(newSearchHash);
         }
 
-        const newSearchHash = hexHash(JSON.stringify(query));
-        setPrevSearchHash(newSearchHash);
         setSearchEnabled(true);
-
-        // setTimeout(() => {
-        //     if (searchResults.data?.web.results) {
-        //         setPreviousSearchResults(searchResults.data.web.results)
-        //     } else {
-        //         setPreviousSearchResults(previousSearchResults)
-        //     }
-        // }, 1);
-    }, [searchResults?.data?.web.results, previousSearchResults, setPreviousSearchResults]);
+    }, [query, searchResults.data?.web.results]);
 
     const submitQuery = () => {
         setEnabled(true);
@@ -106,43 +94,47 @@ export function SearchBox() {
             width: "100%",
             paddingTop: "5px"
         }}>
-            <Card isBlurred isHoverable={true} className="space-y-5 p-4"
-            radius="lg" shadow={"sm"} style={{
-            width: "100%"
-                }}>
-            <CardHeader className="pb-0 pt-2 px-4 flex flex-col justify-between items-center gap-3">
-                <h1 className="z-20 text-5xl font-extrabold tracking-tight sm:text-[5rem] pb-5">
-                    <span className="text-[hsl(280,100%,70%)]">pSearch</span>
-                </h1>
-            <form
-                onSubmit={(e) => {
-                    e.preventDefault();
+            <Card isBlurred isHoverable={false} className="space-y-5 p-4"
+                  radius="lg" shadow={"sm"} style={{
+                width: "100%"
+            }}>
+                <CardHeader className="pb-0 pt-2 px-4 flex flex-col justify-between items-center gap-3">
+                    <h1 className="z-20 text-5xl font-extrabold tracking-tight sm:text-[5rem] pb-5">
+                        <span className="text-[hsl(280,100%,70%)]">pSearch</span>
+                    </h1>
+                    <form
+                        onSubmit={(e) => {
+                            e.preventDefault();
 
-                    const newSearchHash = hexHash(JSON.stringify(query));
-                    console.log("New hash " + newSearchHash);
-                    if (newSearchHash != prevSearchHash) {
-                        setSearchEnabled(false);
-                        setPrevSearchHash(newSearchHash);
-                        submitQuery();
-                    }
-                }}
-                className="flex flex-col gap-2"
-            >
-                <div className={"flex flex-row gap-2 flex-item"}>
-                    <Input
-                        id="search-query"
-                        placeholder="Search Query"
-                        value={query}
-                        onChange={(e) => setQuery(e.target.value)
-                        }
-                        color="secondary"
-                    />
+                            const newSearchHash = hexHash(JSON.stringify(query));
+                            console.log("New hash: " + newSearchHash);
+                            console.log("Old hash: " + prevSearchHash);
+                            if (newSearchHash != prevSearchHash) {
+                                setSearchEnabled(false);
+                                setPrevSearchHash(newSearchHash);
+                                submitQuery();
+                            }
+                        }}
+                        className="flex flex-col gap-2"
+                        style={{
+                            width: "100%",
+                            maxWidth: "800px",
+                        }}
+                    >
+                        <div className={"flex flex-row gap-2 flex-item"}>
+                            <Input
+                                id="search-query"
+                                placeholder="Search Query"
+                                value={query}
+                                onChange={(e) => setQuery(e.target.value)}
+                                color="secondary"
+                            />
 
-                    <Button color="secondary" type="submit" className={"flex-item"} isLoading={!searchEnabled}
-                            disabled={!searchEnabled}>Search</Button>
-                </div>
-            </form>
-            </CardHeader>
+                            <Button color="secondary" type="submit" className={"flex-item"} isLoading={!searchEnabled}
+                                    disabled={!searchEnabled}>Search</Button>
+                        </div>
+                    </form>
+                </CardHeader>
             </Card>
             <br></br>
 
