@@ -1,8 +1,8 @@
-import { getServerAuthSession } from "@/server/auth";
-import { unstable_noStore as noStore } from "next/cache";
-import { redirect } from 'next/navigation';
-import { Header } from "../_components/header";
-import { SearchBox } from "../_components/new-search";
+import {getServerAuthSession} from "@/server/auth";
+import {unstable_noStore as noStore} from "next/cache";
+import {redirect} from 'next/navigation';
+import {Header} from "../_components/header";
+import {SearchBox} from "../_components/new-search";
 
 export default async function Search() {
     noStore();
@@ -23,18 +23,7 @@ export default async function Search() {
                     paddingLeft: "50px",
                     paddingRight: "50px",
                 }}>
-                        {/* <Card isBlurred isHoverable={true} className="space-y-5 p-4"
-                      radius="lg" shadow={"sm"} style={{
-                    width: "100%"
-                        }}>
-                        <CardHeader className="pb-0 pt-2 px-4 flex flex-col justify-between items-center gap-3">
-                            <h1 className="z-20 text-5xl font-extrabold tracking-tight sm:text-[5rem]">
-                                <span className="text-[hsl(280,100%,70%)]">pSearch</span>
-                            </h1>
-                            
-                        </CardHeader>
-                        </Card> */}
-                        <SearchBox/>
+                    <SearchBox/>
                 </div>
             </main>
         </div>

@@ -42,7 +42,8 @@ export default {
                     },
                     light: {
                         colors: {
-                            foreground: "#000000",
+                            foreground: "#223B61",
+                            // foreground: "#FF0000",
                             primary: {
                                 DEFAULT: "#0F0140",
                                 foreground: "#00FF00",

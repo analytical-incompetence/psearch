@@ -100,7 +100,7 @@ export function SearchBox() {
             }}>
                 <CardHeader className="pb-0 pt-2 px-4 flex flex-col justify-between items-center gap-3">
                     <h1 className="z-20 text-5xl font-extrabold tracking-tight sm:text-[5rem] pb-5">
-                        <span className="text-[hsl(280,100%,70%)]">pSearch</span>
+                        pSearch
                     </h1>
                     <form
                         onSubmit={(e) => {
