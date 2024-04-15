@@ -1,8 +1,8 @@
-import { getServerAuthSession } from "@/server/auth";
-import { unstable_noStore as noStore } from "next/cache";
-import { redirect } from 'next/navigation';
-import { Header } from "../_components/header";
-import { SearchHistory } from "../_components/search-history";
+import {getServerAuthSession} from "@/server/auth";
+import {unstable_noStore as noStore} from "next/cache";
+import {redirect} from 'next/navigation';
+import {Header} from "../_components/header";
+import {SearchHistory} from "../_components/search-history";
 
 
 export default async function History() {

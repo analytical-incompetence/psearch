@@ -35,10 +35,9 @@ function Result(result: Result) {
                             textAlign: "left"
                         }}>
                             <p className="text-lg font-semibold">{result.title}</p>
-                            {/*<div className="flex flex-row gap-1 text-small text-default-500">*/}
-                            <div
-                                className={"text-small text-default-500"}>{result.meta_url.hostname + result.meta_url.path.trim()}</div>
-                            {/*</div>*/}
+                            <div className={"text-small text-default-500"}>
+                                {result.meta_url.hostname + result.meta_url.path.trim()}
+                            </div>
                         </div>
                     </div>
 
