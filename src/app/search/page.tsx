@@ -1,5 +1,4 @@
 import { getServerAuthSession } from "@/server/auth";
-import { Card, CardHeader } from "@nextui-org/react";
 import { unstable_noStore as noStore } from "next/cache";
 import { redirect } from 'next/navigation';
 import { Header } from "../_components/header";
@@ -24,7 +23,7 @@ export default async function Search() {
                     paddingLeft: "50px",
                     paddingRight: "50px",
                 }}>
-                        <Card isBlurred isHoverable={true} className="space-y-5 p-4"
+                        {/* <Card isBlurred isHoverable={true} className="space-y-5 p-4"
                       radius="lg" shadow={"sm"} style={{
                     width: "100%"
                         }}>
@@ -32,9 +31,10 @@ export default async function Search() {
                             <h1 className="z-20 text-5xl font-extrabold tracking-tight sm:text-[5rem]">
                                 <span className="text-[hsl(280,100%,70%)]">pSearch</span>
                             </h1>
-                            <SearchBox/>
+                            
                         </CardHeader>
-                        </Card>
+                        </Card> */}
+                        <SearchBox/>
                 </div>
             </main>
         </div>

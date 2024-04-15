@@ -104,8 +104,16 @@ export function SearchBox() {
         <div style={{
             maxWidth: "800px",
             width: "100%",
-            paddingTop: "15px"
+            paddingTop: "5px"
         }}>
+            <Card isBlurred isHoverable={true} className="space-y-5 p-4"
+            radius="lg" shadow={"sm"} style={{
+            width: "100%"
+                }}>
+            <CardHeader className="pb-0 pt-2 px-4 flex flex-col justify-between items-center gap-3">
+                <h1 className="z-20 text-5xl font-extrabold tracking-tight sm:text-[5rem] pb-5">
+                    <span className="text-[hsl(280,100%,70%)]">pSearch</span>
+                </h1>
             <form
                 onSubmit={(e) => {
                     e.preventDefault();
@@ -134,7 +142,8 @@ export function SearchBox() {
                             disabled={!searchEnabled}>Search</Button>
                 </div>
             </form>
-
+            </CardHeader>
+            </Card>
             <br></br>
 
             {previousSearchResults && (
