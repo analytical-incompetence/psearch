@@ -48,7 +48,6 @@ export const postRouter = createTRPCRouter({
             // query: z.function().args().returns(z.string())
         }))
         .query(async ({input}) => {
-            console.log("SEARCH: " + input.query)
 
             const openai = new OpenAI({
                 apiKey: env.OPENAI_API_SECRET
