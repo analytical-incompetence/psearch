@@ -35,6 +35,7 @@ export const env = createEnv({
         STRAVA_CLIENT_ID: z.string(),
         STRAVA_CLIENT_SECRET: z.string(),
         BRAVE_SEARCH_API_SECRET: z.string(),
+        OPENAI_API_SECRET: z.string(),
     },
 
     /**
@@ -62,6 +63,7 @@ export const env = createEnv({
         STRAVA_CLIENT_ID: process.env.STRAVA_CLIENT_ID,
         STRAVA_CLIENT_SECRET: process.env.STRAVA_CLIENT_SECRET,
         BRAVE_SEARCH_API_SECRET: process.env.BRAVE_SEARCH_API_SECRET,
+        OPENAI_API_SECRET: process.env.OPENAI_API_SECRET,
     },
     /**
      * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

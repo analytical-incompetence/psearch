@@ -1,9 +1,11 @@
 import {z} from "zod";
 
+import {OpenAI} from "openai"
+
 import {createTRPCRouter, protectedProcedure, publicProcedure,} from "@/server/api/trpc";
 
 import {env} from "@/env";
-import {type History, parseQueryResult} from "@/utils/searchTypes";
+import {type History, type ResponseObject, parseQueryResult} from "@/utils/searchTypes";
 import {PrismaPromise} from "@prisma/client";
 
 export const postRouter = createTRPCRouter({
@@ -46,16 +48,49 @@ export const postRouter = createTRPCRouter({
             // query: z.function().args().returns(z.string())
         }))
         .query(async ({input}) => {
-            const queryURI = encodeURI(input.query);
-            const response = await fetch(`https://api.search.brave.com/res/v1/web/search?q=${queryURI}`, {
+
+            const openai = new OpenAI({
+                apiKey: env.OPENAI_API_SECRET
+            })
+
+            const chatCompletion = await openai.chat.completions.create({
+                model: "gpt-4-turbo-preview",
+                messages: [{"role": "system", "content": `
+                You are an assistant that helps generate queries that are logically opposite to what was originally queried.
+                You are given the query in text, which represents the original query.
+
+                You should generate the following data:
+                - originalQuery: This is the original query, i.e. the input. It should be identical to the input.
+                - oppositeQuery: This is the opposite query. It has the following requirements:
+                    - oppositeQuery must only contain the opposite search query. No conversational dialog allowed (e.g. "Sure!", "Yes!", "Here is an example:", etc.)
+                    - oppositeQuery must be of a similar word count to originalQuery.
+                    - If any particular company/brand names are mentioned, find out which sector that company/brand serves, and give an example company for the opposite sector. For example, if originalQuery is "GitHub", which is a tech sector company, so oppositeQuery should be a company in the antiques sector, such as "Borro".
+
+                For example, If the originalQuery is 'Hot locations near me', oppositeQuery should be 'Cold locations far away from me'.
+
+                The data should be presented as a JSON object with the following format:
+
+                {
+                    "originalQuery": "...", 
+                    "oppositeQuery": "..."
+                }
+
+                `},{ "role": "user", "content": input.query}],
+            });
+
+            if (chatCompletion.choices[0]?.message.content) {
+                const aiResponse = JSON.parse(chatCompletion.choices[0]?.message.content) as ResponseObject;
+                const queryURI = encodeURI(aiResponse.oppositeQuery);
+                const response = await fetch(`https://api.search.brave.com/res/v1/web/search?q=${queryURI}`, {
                 headers: {
                     'Accept': 'application/json',
                     'Accept-Encoding': 'gzip',
                     'X-Subscription-Token': env.BRAVE_SEARCH_API_SECRET,
                 }
-            });
+                });
 
-            return parseQueryResult(await response.text());
+                return parseQueryResult(await response.text());
+            }
         }),
 
     pushQuery: protectedProcedure
