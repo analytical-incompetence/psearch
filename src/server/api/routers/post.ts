@@ -5,7 +5,7 @@ import {OpenAI} from "openai"
 import {createTRPCRouter, protectedProcedure, publicProcedure,} from "@/server/api/trpc";
 
 import {env} from "@/env";
-import {type History, parseQueryResult} from "@/utils/searchTypes";
+import {type History, type ResponseObject, parseQueryResult} from "@/utils/searchTypes";
 import {PrismaPromise} from "@prisma/client";
 
 export const postRouter = createTRPCRouter({
@@ -57,23 +57,41 @@ export const postRouter = createTRPCRouter({
             const chatCompletion = await openai.chat.completions.create({
                 model: "gpt-4-turbo-preview",
                 messages: [{"role": "system", "content": `
-                You will be given text. Find the opposite text to the prompt.
+                You are an assistant that helps generate queries that are logically opposite to what was originally queried.
+                You are given the query in text, which represents the original query.
 
-                For example, If the input is 'Hot locations near me', response should be 'Cold locations far away from me'
+                You should generate the following data:
+                - originalQuery: This is the original query, i.e. the input. It should be identical to the input.
+                - oppositeQuery: This is the opposite query. It has the following requirements:
+                    - oppositeQuery must only contain the opposite search query. No conversational dialog allowed (e.g. "Sure!", "Yes!", "Here is an example:", etc.)
+                    - oppositeQuery must be of a similar word count to originalQuery.
+                    - If any particular company/brand names are mentioned, find out which sector that company/brand serves, and give an example company for the opposite sector. For example, if originalQuery is "GitHub", which is a tech sector company, so oppositeQuery should be a company in the antiques sector, such as "Borro".
+
+                For example, If the originalQuery is 'Hot locations near me', oppositeQuery should be 'Cold locations far away from me'.
+
+                The data should be presented as a JSON object with the following format:
+
+                {
+                    "originalQuery": "...", 
+                    "oppositeQuery": "..."
+                }
+
                 `},{ "role": "user", "content": input.query}],
             });
-            console.log(chatCompletion.choices[0]?.message.content);
 
-            const queryURI = encodeURI(chatCompletion.choices[0]?.message.content);
-            const response = await fetch(`https://api.search.brave.com/res/v1/web/search?q=${queryURI}`, {
+            if (chatCompletion.choices[0]?.message.content) {
+                const aiResponse = JSON.parse(chatCompletion.choices[0]?.message.content) as ResponseObject;
+                const queryURI = encodeURI(aiResponse.oppositeQuery);
+                const response = await fetch(`https://api.search.brave.com/res/v1/web/search?q=${queryURI}`, {
                 headers: {
                     'Accept': 'application/json',
                     'Accept-Encoding': 'gzip',
                     'X-Subscription-Token': env.BRAVE_SEARCH_API_SECRET,
                 }
-            });
+                });
 
-            return parseQueryResult(await response.text());
+                return parseQueryResult(await response.text());
+            }
         }),
 
     pushQuery: protectedProcedure
