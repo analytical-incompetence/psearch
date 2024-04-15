@@ -14,7 +14,7 @@ import { UserDropdown } from "./ui/user-dropdown";
 
 export function Header({session}) {
     return (
-        <Navbar>
+        <Navbar isBordered>
             <NavbarContent>
                 <NavbarMenuToggle
                     className="sm:hidden"
