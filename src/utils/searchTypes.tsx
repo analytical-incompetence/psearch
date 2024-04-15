@@ -80,6 +80,11 @@ export interface History {
     id: string
 }
 
+export interface ResponseObject {
+    originalQuery: string,
+    oppositeQuery: string
+}
+
 export function parseQueryResult(input: string) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const json: QueryResult = JSON.parse(input);
