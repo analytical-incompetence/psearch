@@ -19,8 +19,8 @@ function Result(result: Result) {
             maxWidth: "800px",
         }}>
             <Card isBlurred isHoverable={true} isPressable={true} className="space-y-5 p-4" radius="lg" shadow={"sm"}>
-                <CardHeader className="pb-0 pt-2 px-4 flex flex-row justify-between items-center gap-3">
-                    <div className="flex flex-row gap-3 items-center">
+                <CardHeader className="pb-0 pt-2 px-4 flex flex-row justify-between items-start gap-3">
+                    <div className="flex flex-row gap-3 items-start">
                         <Image
                             src={result.profile.img}
                             alt={result.profile.name}
@@ -31,11 +31,14 @@ function Result(result: Result) {
                                 maxWidth: "40px",
                             }}
                         />
-                        <div className="flex-col gap-2 items-start">
+                        <div className="flex-col gap-2 items-start" style={{
+                            textAlign: "left"
+                        }}>
                             <p className="text-lg font-semibold">{result.title}</p>
-                            <div className="flex flex-row gap-1 text-small text-default-500">
-                                <div>{result.meta_url.hostname + result.meta_url.path.trim()}</div>
-                            </div>
+                            {/*<div className="flex flex-row gap-1 text-small text-default-500">*/}
+                            <div
+                                className={"text-small text-default-500"}>{result.meta_url.hostname + result.meta_url.path.trim()}</div>
+                            {/*</div>*/}
                         </div>
                     </div>
 
