@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import { Card, CardBody, CardHeader, Image } from "@nextui-org/react";
 
 import { IsSecure } from "@/app/_components/secure";
-import useSessionStorage from "./persistence";
+import { hexHash } from "next/dist/shared/lib/hash";
 
 function Result(result: Result) {
     return (
@@ -37,7 +37,6 @@ function Result(result: Result) {
                             </a>
                             <div className="flex flex-row gap-1 text-small text-default-500">
                                 <div>{result.meta_url.hostname + result.meta_url.path.trim()}</div>
-                                {/*<div>{result.meta_url.path.trim()}</div>*/}
                             </div>
                         </div>
                     </div>
@@ -61,23 +60,36 @@ export function SearchBox() {
 
     const [query, setQuery] = useState(urlQuery);
     const [enabled, setEnabled] = useState(urlQuery.length > 0);
-    const [previousSearchResults, setPreviousSearchResults] = useSessionStorage<Result[]>([], "previousSearchResults");
+    const [searchEnabled, setSearchEnabled] = useState(urlQuery.length > 0);
+    // const [previousSearchResults, setPreviousSearchResults] = useSessionStorage<Result[]>([], "previousSearchResults");
+
+    const [previousSearchResults, setPreviousSearchResults] = useState<Result[]>([]);
 
     const pushQuery = api.post.pushQuery.useMutation();
     const searchResults = api.post.getSearchResults.useQuery({query}, {enabled});
+
+    const [prevSearchHash, setPrevSearchHash] = useState(hexHash(JSON.stringify(searchResults)));
 
     const router = useRouter();
 
     useEffect(() => {
         setEnabled(false);
 
-        setTimeout(() => {
-            if (searchResults.data?.web.results) {
-                setPreviousSearchResults(searchResults.data.web.results)
-            } else {
-                setPreviousSearchResults(previousSearchResults)
-            }
-        }, 1);
+        if (searchResults?.data?.web.results) {
+            setPreviousSearchResults(searchResults.data.web.results);
+        }
+
+        const newSearchHash = hexHash(JSON.stringify(query));
+        setPrevSearchHash(newSearchHash);
+        setSearchEnabled(true);
+
+        // setTimeout(() => {
+        //     if (searchResults.data?.web.results) {
+        //         setPreviousSearchResults(searchResults.data.web.results)
+        //     } else {
+        //         setPreviousSearchResults(previousSearchResults)
+        //     }
+        // }, 1);
     }, [searchResults?.data?.web.results, previousSearchResults, setPreviousSearchResults]);
 
     const submitQuery = () => {
@@ -92,12 +104,27 @@ export function SearchBox() {
         <div style={{
             maxWidth: "800px",
             width: "100%",
-            paddingTop: "15px"
+            paddingTop: "5px"
         }}>
+            <Card isBlurred isHoverable={true} className="space-y-5 p-4"
+            radius="lg" shadow={"sm"} style={{
+            width: "100%"
+                }}>
+            <CardHeader className="pb-0 pt-2 px-4 flex flex-col justify-between items-center gap-3">
+                <h1 className="z-20 text-5xl font-extrabold tracking-tight sm:text-[5rem] pb-5">
+                    <span className="text-[hsl(280,100%,70%)]">pSearch</span>
+                </h1>
             <form
                 onSubmit={(e) => {
                     e.preventDefault();
-                    submitQuery();
+
+                    const newSearchHash = hexHash(JSON.stringify(query));
+                    console.log("New hash " + newSearchHash);
+                    if (newSearchHash != prevSearchHash) {
+                        setSearchEnabled(false);
+                        setPrevSearchHash(newSearchHash);
+                        submitQuery();
+                    }
                 }}
                 className="flex flex-col gap-2"
             >
@@ -106,13 +133,17 @@ export function SearchBox() {
                         id="search-query"
                         placeholder="Search Query"
                         value={query}
-                        onChange={(e) => setQuery(e.target.value)}
+                        onChange={(e) => setQuery(e.target.value)
+                        }
+                        color="secondary"
                     />
 
-                    <Button type="submit" className={"flex-item"} isLoading={enabled}>Search</Button>
+                    <Button color="secondary" type="submit" className={"flex-item"} isLoading={!searchEnabled}
+                            disabled={!searchEnabled}>Search</Button>
                 </div>
             </form>
-
+            </CardHeader>
+            </Card>
             <br></br>
 
             {previousSearchResults && (
