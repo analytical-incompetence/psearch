@@ -35,6 +35,21 @@ function Moon({width = 20, height = 20}) {
     )
 }
 
+ export function Logo({width = 20, height = 20}) {
+  return (
+      <Image
+          src="search-svgrepo-com.svg"
+          alt="Moon"
+          width={width}
+          height={height}
+          radius={"none"}
+          style={{
+              maxWidth: `${width}px`,
+          }}
+      />
+  )
+}
+
 export function ThemeSwitcher() {
   const [mounted, setMounted] = useState(false)
   const { theme, setTheme } = useTheme()

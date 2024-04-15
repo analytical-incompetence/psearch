@@ -1,4 +1,5 @@
 "use client"
+import { type SessionProps } from "@/utils/sessionProps";
 import {
     Button,
     Navbar,
@@ -10,9 +11,8 @@ import {
     NavbarMenuToggle
 } from "@nextui-org/react";
 import Link from "next/link";
-import {ThemeSwitcher} from "./ui/ThemeSwitcher";
-import {UserDropdown} from "./ui/user-dropdown";
-import {type SessionProps} from "@/utils/sessionProps"
+import { Logo, ThemeSwitcher } from "./ui/ThemeSwitcher";
+import { UserDropdown } from "./ui/user-dropdown";
 
 export function Header({session}: SessionProps) {
     return (
@@ -22,7 +22,7 @@ export function Header({session}: SessionProps) {
                     className="sm:hidden"
                 />
                 <NavbarBrand>
-                    <Link href="/" color="secondary">pSearch</Link>
+                    <Link href="/" color="secondary" className="flex flex-row gap-2 align-center"><Logo/><div>pSearch</div></Link>
                 </NavbarBrand>
             </NavbarContent>
 
