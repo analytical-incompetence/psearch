@@ -22,7 +22,6 @@ export function Header({session}: SessionProps) {
                     className="sm:hidden"
                 />
                 <NavbarBrand>
-                    {/* <Link href="/"><Text color="secondary">pSearch</Text></Link> */}
                     <Link href="/" color="secondary">pSearch</Link>
                 </NavbarBrand>
             </NavbarContent>
@@ -55,7 +54,6 @@ export function Header({session}: SessionProps) {
                         color="foreground"
                         className="w-full"
                         href="/search"
-                        // size="lg"
                     >
                         Search
                     </Link>
@@ -65,7 +63,6 @@ export function Header({session}: SessionProps) {
                         color="foreground"
                         className="w-full"
                         href="/history"
-                        // size="lg"
                     >
                         History
                     </Link>
@@ -73,28 +70,4 @@ export function Header({session}: SessionProps) {
             </NavbarMenu>
         </Navbar>
     );
-}
-
-{/* <Dropdown>
-                        <DropdownTrigger>
-                        <Button 
-                            variant="bordered" 
-                        >
-                            Open Menu
-                        </Button>
-                        </DropdownTrigger>
-                        <DropdownMenu aria-label="Static Actions">
-                        <DropdownItem key="new"></DropdownItem>
-
-                        <DropdownItem key="delete" className="text-danger" color="danger">
-                            Delete file
-                        </DropdownItem>
-                        </DropdownMenu>
-                    </Dropdown> */
-}
-{/* <Button as={Link} color="secondary"
-href={session ? "/api/auth/signout?callbackUrl=/" : "/api/auth/signin?callbackUrl=/search"}
-variant="flat">
-{session ? "Sign Out" : "Sign In"}
-</Button> */
 }

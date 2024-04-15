@@ -9,12 +9,12 @@ export function UserDropdown({session}: SessionProps) {
             <DropdownTrigger>
                 {
                     session?.user?.image && (
-                        <Avatar size="sm" src={session.user.image} color="secondary" isBordered/>
+                        <Avatar alt="User Profile Icon" size="sm" src={session.user.image} color="secondary" isBordered/>
                     )
                 }
             </DropdownTrigger>
             <DropdownMenu aria-label="Profile Actions" disabledKeys={["profile"]}>
-                <DropdownItem key="profile" className="h-14 gap-2">
+                <DropdownItem key="profile" className="h-14 gap-2" textValue={"User Email"}>
                     <p className="font-semibold">Signed in as</p>
 
                     {
@@ -24,7 +24,7 @@ export function UserDropdown({session}: SessionProps) {
                     }
                 </DropdownItem>
                 <DropdownItem key="sign-out" className="text-danger" color="danger"
-                              href="/api/auth/signout?callbackUrl=/">
+                              href="/api/auth/signout?callbackUrl=/" textValue={"Sign Out Button"}>
                     Sign Out
                 </DropdownItem>
             </DropdownMenu>
