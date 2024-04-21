@@ -13,7 +13,7 @@ export default async function History() {
     } else {
         return (
             <div>
-                <Header session={session}/>
+                <Header session={session} allow_login={true}/>
                 <main
                     className="overflow-hidden flex min-h-screen flex-col items-center">
                     <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">

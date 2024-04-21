@@ -1,7 +1,7 @@
 "use client";
 
 import {api} from "@/trpc/react";
-import {type Result} from "@/utils/searchTypes";
+import {QueryResult, type Result} from "@/utils/searchTypes";
 import {Button} from "@nextui-org/button";
 import {Input} from "@nextui-org/input";
 import {useRouter, useSearchParams} from "next/navigation";
@@ -61,7 +61,10 @@ export function SearchBox() {
     const [query, setQuery] = useState(urlQuery);
     const [enabled, setEnabled] = useState(urlQuery.length > 0);
     const [searchEnabled, setSearchEnabled] = useState(urlQuery.length > 0);
-    const [previousSearchResults, setPreviousSearchResults] = useState<Result[]>([]);
+    // const [previousSearchResults, setPreviousSearchResults] = useState<Result[]>([]);
+    const [previousSearchResults, setPreviousSearchResults] = useState<QueryResult>(
+        {} as QueryResult
+    );
 
     const pushQuery = api.post.pushQuery.useMutation();
     const searchResults = api.post.getSearchResults.useQuery({query}, {enabled});
@@ -74,13 +77,14 @@ export function SearchBox() {
         setEnabled(false);
 
         if (searchResults?.data?.web.results) {
-            setPreviousSearchResults(searchResults.data.web.results);
+            // setPreviousSearchResults(searchResults.data.web.results);
+            setPreviousSearchResults(searchResults.data);
             const newSearchHash = hexHash(JSON.stringify(query));
             setPrevSearchHash(newSearchHash);
         }
 
         setSearchEnabled(true);
-    }, [query, searchResults.data?.web.results]);
+    }, [query, searchResults.data, searchResults.data?.web.results]);
 
     const submitQuery = () => {
         setEnabled(true);
@@ -143,7 +147,7 @@ export function SearchBox() {
             {previousSearchResults && (
                 <div className={"flex flex-col gap-4"}>
                     {
-                        previousSearchResults.map(
+                        previousSearchResults.web.results.map(
                             (result, index) => (
                                 <Result key={index} {...result} />
                             )
