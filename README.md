@@ -43,3 +43,15 @@ npm run db:push
 ```sh
 npm run dev
 ```
+
+Or if you choose to not run it in development mode you could do:
+
+```sh
+npm run build
+```
+
+Then
+
+```sh
+npm run start
+```
