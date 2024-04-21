@@ -1,5 +1,4 @@
 "use client";
-import { Button } from "@nextui-org/react";
 import { motion } from "framer-motion";
 import Link from "node_modules/next/link";
 import { LampContainer } from "./_components/ui/lamp";
@@ -17,7 +16,7 @@ export default function Home() {
           duration: 0.8,
           ease: "easeInOut",
         }}
-        className="mt-8 bg-gradient-to-br from-slate-300 to-slate-500 py-4 bg-clip-text text-center text-4xl font-medium tracking-tight text-transparent md:text-7xl"
+        className="mt-8 bg-gradient-to-br from-slate-300 to-slate-500 py-4 bg-clip-text text-center text-4xl font-medium tracking-tight text-white md:text-7xl"
       >
         pSearch
       </motion.h1>
@@ -29,7 +28,7 @@ export default function Home() {
                 duration: 0.8,
                 ease: "easeInOut",
               }}
-              className="mt-8 bg-gradient-to-br from-slate-300 to-slate-500 py-4 bg-clip-text text-center text-sm font-medium tracking-tight text-transparent md:text-5xl">
+              className="mt-8 bg-gradient-to-br from-slate-300 to-slate-500 py-4 bg-clip-text text-center text-sm font-medium tracking-tight text-white md:text-5xl">
                 The only web browser you will ever need.
       </motion.p>
       <motion.div
@@ -42,12 +41,12 @@ export default function Home() {
         }}
         className="mt-8 bg-gradient-to-br from-slate-300 to-slate-500 py-4 bg-clip-text text-center font-medium tracking-tight text-transparent">
         <Link href="/search">
-            <Button className="p-[3px] relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg" />
+            <button className="p-[3px] relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-900 to-teal-400 rounded-lg" />
                 <div className="px-8 py-2  bg-black rounded-[6px]  relative group transition duration-200 text-white hover:bg-transparent">
                 Click Me!
                 </div>
-            </Button>
+            </button>
         </Link>
       </motion.div>
     </LampContainer>
