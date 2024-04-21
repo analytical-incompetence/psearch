@@ -1,19 +1,15 @@
 "use client";
-
+import { BackgroundGradientAnimation } from "./_components/ui/background-gradient-animation";
 
 export default function Home() {
 
     return (
-        <div>
-            <main
-                className={"overflow-hidden flex min-h-screen flex-col items-center justify-center text-white"}
-            >
-                <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
-                    <h1 className="z-20 text-5xl font-extrabold tracking-tight sm:text-[5rem]">
-                        <span className="text-[hsl(280,100%,70%)]">pSearch</span>
-                    </h1>
-                </div>
-            </main>
+        <BackgroundGradientAnimation>
+        <div className="absolute z-50 inset-0 flex items-center justify-center text-white font-bold px-4 pointer-events-none text-3xl text-center md:text-4xl lg:text-7xl">
+          <p className="bg-clip-text text-transparent drop-shadow-2xl bg-gradient-to-b from-white/80 to-white/20">
+            Gradients X Animations
+          </p>
         </div>
+      </BackgroundGradientAnimation>
     );
 }
