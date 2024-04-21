@@ -144,7 +144,7 @@ export function SearchBox() {
             </Card>
             <br></br>
 
-            {previousSearchResults && (
+            {previousSearchResults.web?.results && (
                 <div className={"flex flex-col gap-4"}>
                     {
                         previousSearchResults.web.results.map(
