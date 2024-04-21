@@ -41,12 +41,6 @@ npm run db:push
 ### 3.Starting the server
 
 ```sh
-npm run dev
-```
-
-Or if you choose to not run it in development mode you could do:
-
-```sh
 npm run build
 ```
 
@@ -54,4 +48,10 @@ Then
 
 ```sh
 npm run start
+```
+
+Or if you would rather run it in development mode you can run the command:
+
+```sh
+npm run dev
 ```
