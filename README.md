@@ -28,21 +28,18 @@ Occasionally, you might find what you're looking for.
 
 To start the data base use the command:
 
-```
-sh
+```sh
 ./start-database.sh
 ```
 
 ### 2.Pushing Schema to the Database
 
-```
-sh
+```sh
 npm run db:push
 ```
 
 ### 3.Starting the server
 
-```
-sh
+```sh
 npm run dev
 ```
