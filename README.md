@@ -1,16 +1,18 @@
 # PSearch
 
-Occasionally, you might find what you're looking for.
+The only web browser you will ever need.
 
 ## Setup
 
-### Pre-requisites
+### Prerequisites
 
 - Install [Docker](https://docs.docker.com/engine/install/)
 - Install [NodeJS](https://nodejs.org/en/download)
 
 > [!NOTE]
-> You will have to add a .env file at the root of the folder with the following access tokens for it to run:
+> You will have to add a .env file at the root of the folder with the following access tokens for it to run.
+> If you do not plan on using one of the Auth providers, simply set it to an empty string. If the key is not present
+> the server will not run correctly.
 
 - DATABASE_URL="postgresql://postgres:0T3zQSygmDNKlmwH@localhost:5432/psearch"
 - NEXTAUTH_SECRET="TestSecret"
@@ -24,21 +26,28 @@ Occasionally, you might find what you're looking for.
 - BRAVE_SEARCH_API_SECRET = "shhhhhhh"
 - OPENAI_API_SECRET = "shhhhhh"
 
-### 1.Starting Database (Docker Container)
+### 0. Installing Dependencies
+Install all the dependencies by running:
 
-To start the data base use the command:
+```sh 
+npm install
+```
+
+### 1. Starting Database (Docker Container)
+
+To start the database use the command:
 
 ```sh
 ./start-database.sh
 ```
 
-### 2.Pushing Schema to the Database
+### 2. Pushing Schema to the Database
 
 ```sh
 npm run db:push
 ```
 
-### 3.Starting the server
+### 3. Starting the server
 
 ```sh
 npm run dev
