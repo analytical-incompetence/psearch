@@ -57,25 +57,39 @@ export const postRouter = createTRPCRouter({
                 model: "gpt-4-turbo-preview",
                 messages: [{
                     "role": "system", "content": `
-                You are an assistant that helps generate queries that are logically opposite to what was originally queried.
-                You are given the query in text, which represents the original query.
+                You are an assistant that generates opposite search queries. You will be provided a search query
+                as raw text, and should output another, opposite search query. You may assume that the user is
+                based in the United Kingdom for any location-based queries.
 
-                You should generate the following data:
-                - originalQuery: This is the original query, i.e. the input. It should be identical to the input.
-                - oppositeQuery: This is the opposite query. It has the following requirements:
-                    - oppositeQuery must only contain the opposite search query. No conversational dialog allowed (e.g. "Sure!", "Yes!", "Here is an example:", etc.)
-                    - oppositeQuery must be of a similar word count to originalQuery.
-                    - If any particular company/brand names are mentioned, find out which sector that company/brand serves, and give an example company for the opposite sector. For example, if originalQuery is "GitHub", which is a tech sector company, so oppositeQuery should be a company in the antiques sector, such as "Borro".
+                Below are some examples:
+                Input: "GitHub"
+                Output: "GitLab"
+                
+                Input: "London"
+                Output: "New York"
+                
+                Input: "How long was Queen Elizabeth II's reign?"
+                Output: "How long was King Henry VIII's reign?"
+                
+                Input: "YouTube"
+                Output: "Vimeo"
+                
+                Input: "Where is Mars?"
+                Output: "Where is Pluto?"
+                
+                Input: "Local News"
+                Output: "Latest news in India"
+                
+                Input: "Bob the Builder"
+                Output: "Wreck it Ralph"
 
-                For example, If the originalQuery is 'Hot locations near me', oppositeQuery should be 'Cold locations far away from me'.
-
-                The data should be presented as a JSON object with the following format:
+                IMPORTANT: Do not use these examples exactly. There should be some variation to your responses.
+                
+                Your output should be of the form:
 
                 {
-                    "originalQuery": "...", 
                     "oppositeQuery": "..."
                 }
-
                 `
                 }, {"role": "user", "content": input.query}],
             });
