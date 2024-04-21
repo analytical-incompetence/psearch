@@ -5,8 +5,8 @@ import {OpenAI} from "openai"
 import {createTRPCRouter, protectedProcedure, publicProcedure,} from "@/server/api/trpc";
 
 import {env} from "@/env";
-import {type History, type ResponseObject, parseQueryResult} from "@/utils/searchTypes";
-import {PrismaPromise} from "@prisma/client";
+import {type History, parseQueryResult, type ResponseObject} from "@/utils/searchTypes";
+import {type PrismaPromise} from "@prisma/client";
 
 export const postRouter = createTRPCRouter({
     hello: publicProcedure
@@ -55,7 +55,8 @@ export const postRouter = createTRPCRouter({
 
             const chatCompletion = await openai.chat.completions.create({
                 model: "gpt-4-turbo-preview",
-                messages: [{"role": "system", "content": `
+                messages: [{
+                    "role": "system", "content": `
                 You are an assistant that helps generate queries that are logically opposite to what was originally queried.
                 You are given the query in text, which represents the original query.
 
@@ -75,18 +76,20 @@ export const postRouter = createTRPCRouter({
                     "oppositeQuery": "..."
                 }
 
-                `},{ "role": "user", "content": input.query}],
+                `
+                }, {"role": "user", "content": input.query}],
             });
 
             if (chatCompletion.choices[0]?.message.content) {
                 const aiResponse = JSON.parse(chatCompletion.choices[0]?.message.content) as ResponseObject;
+                console.log("Response: ", aiResponse);
                 const queryURI = encodeURI(aiResponse.oppositeQuery);
                 const response = await fetch(`https://api.search.brave.com/res/v1/web/search?q=${queryURI}`, {
-                headers: {
-                    'Accept': 'application/json',
-                    'Accept-Encoding': 'gzip',
-                    'X-Subscription-Token': env.BRAVE_SEARCH_API_SECRET,
-                }
+                    headers: {
+                        'Accept': 'application/json',
+                        'Accept-Encoding': 'gzip',
+                        'X-Subscription-Token': env.BRAVE_SEARCH_API_SECRET,
+                    }
                 });
 
                 return parseQueryResult(await response.text());

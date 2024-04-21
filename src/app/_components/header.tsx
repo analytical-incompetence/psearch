@@ -14,7 +14,7 @@ import Link from "next/link";
 import {Logo, ThemeSwitcher} from "./ui/ThemeSwitcher";
 import {UserDropdown} from "./ui/user-dropdown";
 
-export function Header({session}: SessionProps) {
+export function Header({session, allow_login = true}: SessionProps) {
     return (
         <Navbar isBordered>
             <NavbarContent>
@@ -29,7 +29,6 @@ export function Header({session}: SessionProps) {
                             <div className={"flex flex-col align-center items-center"} style={{
                                 height: "26px",
                                 fontWeight: "bolder"
-
                             }}>
                                 pSearch
                             </div>
@@ -55,9 +54,9 @@ export function Header({session}: SessionProps) {
                     <ThemeSwitcher/>
                 </NavbarItem>
                 <NavbarItem>
-                    {session ? <UserDropdown session={session}/> :
+                    {allow_login && (session ? <UserDropdown session={session} allow_login={allow_login}/> :
                         <Button as={Link} color="secondary" href="/api/auth/signin?callbackUrl=/search">Sign
-                            In</Button>}
+                            In</Button>)}
                 </NavbarItem>
             </NavbarContent>
             <NavbarMenu>
