@@ -119,10 +119,24 @@ export const postRouter = createTRPCRouter({
                 },
             });
         }),
+    
+    deleteQueries: protectedProcedure
+        .input(z.object({
+            id: z.number(),
+        }))
+        .mutation(async ({ctx, input}) => {
+            return ctx.db.query.delete({
+                where: {
+                    id: input.id,
+                    userId: ctx.session.user.id,
+                }
+            })
+        }),
 
     getQueries: protectedProcedure.query(async ({ctx}) => {
         return ctx.db.query.findMany({
             where: {userId: ctx.session.user.id},
-        }) as unknown as PrismaPromise<History[]>;
+        }) as unknown as PrismaPromise<History[]>
     })
+
 });
