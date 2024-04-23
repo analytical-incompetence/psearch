@@ -70,6 +70,11 @@ export async function SearchHistory() {
                 maxWidth: "800px",
                 margin: "auto"
             }}>
+                <Button color="danger" onPress={() => {
+                    console.log("Press.")
+                }}>
+                    Delete
+                </Button>
                 {
                     historyData.map(
                         (result) => (
