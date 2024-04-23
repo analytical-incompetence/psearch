@@ -1,7 +1,7 @@
 "use client";
 
 import {api} from "@/trpc/react";
-import {QueryResult, type Result} from "@/utils/searchTypes";
+import {type QueryResult, type Result} from "@/utils/searchTypes";
 import {Button} from "@nextui-org/button";
 import {Input} from "@nextui-org/input";
 import {useRouter, useSearchParams} from "next/navigation";
@@ -113,8 +113,6 @@ export function SearchBox() {
                             e.preventDefault();
 
                             const newSearchHash = hexHash(JSON.stringify(query));
-                            console.log("New hash: " + newSearchHash);
-                            console.log("Old hash: " + prevSearchHash);
                             if (newSearchHash != prevSearchHash) {
                                 setSearchEnabled(false);
                                 setPrevSearchHash(newSearchHash);

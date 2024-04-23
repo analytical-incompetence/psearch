@@ -96,7 +96,6 @@ export const postRouter = createTRPCRouter({
 
             if (chatCompletion.choices[0]?.message.content) {
                 const aiResponse = JSON.parse(chatCompletion.choices[0]?.message.content) as ResponseObject;
-                console.log("Response: ", aiResponse);
                 const queryURI = encodeURI(aiResponse.oppositeQuery);
                 const response = await fetch(`https://api.search.brave.com/res/v1/web/search?q=${queryURI}`, {
                     headers: {
