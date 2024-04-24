@@ -10,6 +10,7 @@ export function DeleteButton({ id=0 }) {
             deleteQueries.mutate({id: id})
             window.location.reload()
         }}>
+            Delete Search
         </Button>
     )
 }
