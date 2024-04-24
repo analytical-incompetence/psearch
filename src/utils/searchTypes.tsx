@@ -77,7 +77,7 @@ export interface History {
     query: string
     createdAt: Date,
     userId: string,
-    id: string
+    id: number
 }
 
 export interface ResponseObject {

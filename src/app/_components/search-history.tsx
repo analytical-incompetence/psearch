@@ -1,6 +1,7 @@
 import { api } from "@/trpc/server";
 import { type History } from "@/utils/searchTypes";
 import { Button, Card, CardBody, CardHeader, Link } from "@nextui-org/react";
+import { DeleteButton } from "@/app/_components/button";
 
 
 function Result({
@@ -8,7 +9,7 @@ function Result({
                         query: "",
                         createdAt: new Date(),
                         userId: "",
-                        id: ""
+                        id: 0
                     } as History
                 }) {
     return (
@@ -34,6 +35,7 @@ function Result({
                     </CardHeader>
                 </Card>
             </a>
+            <DeleteButton id={data.id}></DeleteButton>
         </div>
     )
 }
@@ -81,3 +83,9 @@ export async function SearchHistory() {
         )
     }
 }
+
+// export async function DeleteQueries(QueryID) {
+//     const deleteQueries = api.post.deleteQueries;
+//     await deleteQueries.mutate({QueryID});
+//     await SearchHistory();
+// }
