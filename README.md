@@ -64,3 +64,48 @@ Or if you would rather run it in development mode you can run the command:
 ```sh
 npm run dev
 ```
+
+# Screenshots of the Website
+
+<picture>
+  <source 
+    srcset="https://raw.githubusercontent.com/analytical-incompetence/psearch/master/images/homeScreen.png" 
+    media="(prefers-color-scheme: dark)">
+  <img src="https://raw.githubusercontent.com/analytical-incompetence/psearch/master/images/homeScreen.png">
+</picture>
+
+<picture>
+  <source 
+    srcset="https://raw.githubusercontent.com/analytical-incompetence/psearch/master/images/loginScreen.png" 
+    media="(prefers-color-scheme: dark)">
+  <img src="https://raw.githubusercontent.com/analytical-incompetence/psearch/master/images/loginScreen.png">
+</picture>
+
+<picture>
+  <source 
+    srcset="https://raw.githubusercontent.com/analytical-incompetence/psearch/master/images/searchPageEmpty.png" 
+    media="(prefers-color-scheme: dark)">
+  <img src="https://raw.githubusercontent.com/analytical-incompetence/psearch/master/images/searchPageEmpty.png">
+</picture>
+
+<picture>
+  <source 
+    srcset="https://raw.githubusercontent.com/analytical-incompetence/psearch/master/images/searchPageLightMode.png" 
+    media="(prefers-color-scheme: dark)">
+  <img src="https://raw.githubusercontent.com/analytical-incompetence/psearch/master/images/searchPageLightMode.png">
+</picture>
+
+<picture>
+  <source 
+    srcset="https://raw.githubusercontent.com/analytical-incompetence/psearch/master/images/searchPageQuery.png" 
+    media="(prefers-color-scheme: dark)">
+  <img src="https://raw.githubusercontent.com/analytical-incompetence/psearch/master/images/searchPageQuery.png">
+</picture>
+
+<picture>
+  <source 
+    srcset="https://raw.githubusercontent.com/analytical-incompetence/psearch/master/images/historyPage.png" 
+    media="(prefers-color-scheme: dark)">
+  <img src="https://raw.githubusercontent.com/analytical-incompetence/psearch/master/images/historyPage.png">
+</picture>
+
